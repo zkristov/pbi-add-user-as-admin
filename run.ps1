@@ -2,7 +2,7 @@
 
 param(
     $upn = "admin@contoso.onmicrosoft.com",
-    $workspaceFilter =  @() #@("3145b420-c4f9-44c4-8b95-89f6e56e594f", "4ce3bc96-d799-4d6e-8fbf-41a4734ece2c")
+    $ids =  @() #@("3145b420-c4f9-44c4-8b95-89f6e56e594f")
 )
 
 $ErrorActionPreference = "Stop"
@@ -21,9 +21,9 @@ try {
     $workspaces = @($workspaces | Where-Object {$_.type -eq "Workspace" -and $_.state -eq "Active" -and $_.IsOnDedicatedCapacity -eq $true})
 
     # filter workspaces by workspace ids (for testing purposes only)
-    if ($workspaceFilter -and $workspaceFilter.Count -gt 0)
+    if ($ids -and $ids.Count -gt 0)
     {
-        $workspaces = @($workspaces | Where-Object { $workspaceFilter -contains $_.Id})
+        $workspaces = @($workspaces | Where-Object { $ids -contains $_.Id})
     }
 
     # remove workspaces that already have the target account assigned as an admin
